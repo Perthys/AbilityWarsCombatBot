@@ -5,6 +5,10 @@ if not shared.PerthCombatBot then
     }
 end
 
+local Whitelisted = {
+    "Perth";
+}
+
 local BlacklistItems = {
     "1";
     "2";
@@ -45,7 +49,6 @@ local Algorithims = {
         :Add("Health", 1, "Higher")
         :Add("Distance", 2, "Higher")
         :Add("Facing", 5, "Lower")
-      --  :Add("IsBlack", 5, "Lower")
 }
 
 local function DefineVariables()
@@ -156,7 +159,7 @@ local function FindBestTargetsRelativeTo(RelativeCharacter, CheckTeam, Verificat
         if not CustomGetterFunction then
             for Index, Player in pairs(Players:GetPlayers()) do
                 if Player ~= LocalPlayer then
-                    if CheckTeam and Player.Team == LocalPlayer.Team then
+                    if CheckTeam and Player.Team == LocalPlayer.Team or table.find(Whitelisted, Player.Name) then
                         continue;
                     end
                     
@@ -339,7 +342,7 @@ local Conditons = {
         
     end;
     [2] = function(Character, TargetCharacter) -- AttackMode
-        if (TargetCharacter:GetPivot().Position - Character:GetPivot().Position).Magnitude <= 8 and not HitDebounce then
+        if (TargetCharacter:GetPivot().Position - Character:GetPivot().Position).Magnitude <= 10 and not HitDebounce then
             HitDebounce = true
             local AbilitiesEvent = Character:FindFirstChild("AbilitiesEvent");
             local HitEvent = Character:FindFirstChild("HitEvent");
@@ -351,7 +354,7 @@ local Conditons = {
                 HitEvent:FireServer(TargetHumanoid, 0, 1.8, TargetHumanoidRootPart.Position)
             end
             
-            task.delay(0.20, function()
+            task.delay(0.1, function()
                 HitDebounce = false
             end)
         end
