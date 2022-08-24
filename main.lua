@@ -45,7 +45,7 @@ local Algorithims = {
         :Add("Health", 1, "Higher")
         :Add("Distance", 2, "Higher")
         :Add("Facing", 5, "Lower")
-        :Add("IsBlack", 5, "Lower")
+      --  :Add("IsBlack", 5, "Lower")
 }
 
 local function DefineVariables()
